@@ -95742,7 +95742,7 @@ A.I1.prototype={
 T(){return new A.a52($.G().$1$0(t.YR).a,B.n)}}
 A.a52.prototype={
 w(a,b){var s=null
-return new A.XC(new A.Ln(this.e,new A.I3(new A.HZ(new A.aSa(),s),new A.aSb(),new A.aSc(),s),"G2 Lock App",A.bg0(s,"Hiragino Kaku Gothic Pro"),!1,new A.avz(s),s),s)}}
+return new A.XC(new A.Ln(this.e,new A.I3(new A.HZ(new A.aSa(),s),new A.aSb(),new A.aSc(),s),"G2 Lock App",A.bg0(s,"HiraginoKakuGothicProW3"),!1,new A.avz(s),s),s)}}
 A.aSb.prototype={
 $1(a){var s=null,r=A.W(A.a([A.o(B.p,A.ai("assets/icons/ic_logo.svg",B.h,B.r,42,s),B.d,B.v,s,s,s,s,s,s,B.vD,s,s,s),B.RU],t.p),B.k,B.j,B.i)
 return r},
