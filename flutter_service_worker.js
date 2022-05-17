@@ -3,10 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "96f2226ff958d19892a2e58a8b0a9234",
-"index.html": "b10c3c6e07a065e5f594b9bd57762c28",
-"/": "b10c3c6e07a065e5f594b9bd57762c28",
-"main.dart.js": "69405ecc526fba9b3e204c556c69fd8a",
+  "version.json": "43f70465c6e0a407bb7b3da5a4619bd4",
+"index.html": "5bcb065b415f1f478432fa85d92e8dc4",
+"/": "5bcb065b415f1f478432fa85d92e8dc4",
+"main.dart.js": "b4f4fa7df6eede575be62318a8a8a94f",
+"flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
@@ -14,7 +15,7 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "0ab86e662515757b8662854d61988602",
 "assets/AssetManifest.json": "0dff98b0c3ab9863230e314b9a979023",
-"assets/NOTICES": "6d7e045e522f36b97c080dd2c311f553",
+"assets/NOTICES": "dc0f32e171a6c9a95056965dd980b7d5",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/fluttertoast/assets/toastify.js": "e7006a0a033d834ef9414d48db3be6fc",
@@ -25,7 +26,7 @@ const RESOURCES = {
 "assets/fonts/NotoSansJP-Thin.otf": "e2b92248795c0cd02d9858aaf2a12ec2",
 "assets/fonts/HiraginoKakuGothicProW3.otf": "9235878c979f8fa583e3686441e351ae",
 "assets/fonts/NotoSansJP-Bold.otf": "e463c4b3a2d7fbfb917831767da8c24f",
-"assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
+"assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "assets/fonts/NotoSansJP-Black.otf": "5ce4631ec833cd0011936d5653fbd144",
 "assets/assets/images/img_empty.svg": "d1cfd30745685f465c959ce9a68656f5",
 "assets/assets/images/img_lock.png": "1a19d8ae0d81c7bb63a7008c430b3f1d",
@@ -119,10 +120,10 @@ const RESOURCES = {
 "assets/assets/icons/ic_keyboard.svg": "4169f502f7a8564452dbc7ce17c4cfdd",
 "assets/assets/icons/ic_white_tick.svg": "64ab033badcdbf72d7fa43cb8e34f346",
 "assets/assets/icons/ic_back.svg": "6f4734d0b6f003ffe4afd984baa9caff",
-"assets/assets/icons/ic_nav_user_manage.svg": "06d1a5cd0992446f596eb18fe64abf23",
+"assets/assets/icons/ic_nav_user_manage.svg": "b86730aaf863ad6a7d43ddf0b3860b01",
 "assets/assets/icons/ic_orange_menu.svg": "2f0a52ccc4d5fa88faa79ff6d60060ad",
 "assets/assets/icons/ic_nav_notification_setting_push.svg": "c97255889208d2eca102cbe733302dda",
-"assets/assets/icons/ic_nav_key_card_manage.svg": "04a8640b6a26d2d52e7115dfad10a447",
+"assets/assets/icons/ic_nav_key_card_manage.svg": "ea4fd5b73c9fff6b09e111e08374dc1b",
 "assets/assets/icons/ic_white_plus.svg": "2cd7dfb3e968f4e34169712f9c40dc8a",
 "assets/assets/icons/ic_ticked.svg": "5e775a5606a4b56402d5b51bc29069d4",
 "assets/assets/icons/ic_white_lock.svg": "020b4f5e63a0cdedc9081c8d0dd9bf0e",
@@ -143,8 +144,7 @@ const RESOURCES = {
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = [
-  "/",
-"main.dart.js",
+  "main.dart.js",
 "index.html",
 "assets/NOTICES",
 "assets/AssetManifest.json",
