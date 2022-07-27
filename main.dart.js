@@ -100164,11 +100164,12 @@ switch(this.d.a){case 0:return this.at9()
 case 1:return A.a1("assets/icons/ic_lock_warning.svg",s,B.o,s,23)
 case 2:return A.a1(r,s,B.o,s,21)
 case 3:return A.a1(r,s,B.o,s,21)}},
-at9(){var s,r=null,q="assets/icons/ic_lock_fail.svg",p=this.fx[0]
+at9(){var s,r=null,q="assets/icons/ic_lock_fail.svg",p=this.fx
+if(p.length>0){p=p[0]
 if(p.c===B.fP){p=p.d
 s=p!==B.iI
 if(s&&p!==B.dz&&p!==B.dA&&p!==B.dB)return A.a1(q,r,B.o,r,20)
-if(!s||p===B.dz||p===B.dA||p===B.dB)return A.a1(q,r,B.o,r,20)}return A.a1("assets/icons/ic_lock_warning.svg",r,B.o,r,23)},
+if(!s||p===B.dz||p===B.dA||p===B.dB)return A.a1(q,r,B.o,r,20)}}return A.a1("assets/icons/ic_lock_warning.svg",r,B.o,r,23)},
 dS(){return this.a},
 zC(){return B.y1},
 gbI(a){return this.a},
