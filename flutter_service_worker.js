@@ -3,10 +3,10 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "cb1addb73f64286e7dce23a50bf1c513",
-"index.html": "215038d533a355969f334b33e2920d71",
-"/": "215038d533a355969f334b33e2920d71",
-"main.dart.js": "9bfa2ff567ea11618bb8970f7aac8a1b",
+  "version.json": "1b453321472138c523a29fe2756fdb6c",
+"index.html": "0e84f5d67b843777737077b4b168cc62",
+"/": "0e84f5d67b843777737077b4b168cc62",
+"main.dart.js": "ae01b1b5db9a71a2e5add9b102971c03",
 "flutter.js": "8ae00b472ec3937a5bee52055d6bc8b4",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
@@ -18,7 +18,6 @@ const RESOURCES = {
 "assets/NOTICES": "d022753815a634fad1142a675d43581c",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/shaders/ink_sparkle.frag": "2ad5fabd6a36a6deff087b8edfd0c1f8",
 "assets/fonts/NotoSansJP-Regular.otf": "ecfed48e463db4e31d1691c8af367730",
 "assets/fonts/NotoSansJP-Medium.otf": "d6c74d39a44c519ff736ac55e5d28a46",
 "assets/fonts/NotoSansJP-Light.otf": "137761c9e4b05edc375b06c256e9b65a",
