@@ -3,10 +3,10 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "278671e0fcc2d7722a594a4280468aec",
-"index.html": "3c9012820f23846a145a0182f74f6e86",
-"/": "3c9012820f23846a145a0182f74f6e86",
-"main.dart.js": "b5acbd7640e4668f7a9c39cdb89cfb39",
+  "version.json": "cb1addb73f64286e7dce23a50bf1c513",
+"index.html": "215038d533a355969f334b33e2920d71",
+"/": "215038d533a355969f334b33e2920d71",
+"main.dart.js": "9bfa2ff567ea11618bb8970f7aac8a1b",
 "flutter.js": "8ae00b472ec3937a5bee52055d6bc8b4",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
@@ -15,7 +15,7 @@ const RESOURCES = {
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "0ab86e662515757b8662854d61988602",
 "assets/AssetManifest.json": "799bc3aac1f78452f7b98dacf276b40e",
-"assets/NOTICES": "4475ba86c8f74501062e5a3ce3679306",
+"assets/NOTICES": "d022753815a634fad1142a675d43581c",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/shaders/ink_sparkle.frag": "2ad5fabd6a36a6deff087b8edfd0c1f8",
@@ -185,6 +185,7 @@ const RESOURCES = {
 const CORE = [
   "main.dart.js",
 "index.html",
+"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -283,11 +284,9 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache only if the resource was successfully fetched.
+        // lazily populate the cache.
         return response || fetch(event.request).then((response) => {
-          if (response && Boolean(response.ok)) {
-            cache.put(event.request, response.clone());
-          }
+          cache.put(event.request, response.clone());
           return response;
         });
       })
