@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0090)https://www.felica-support.sony.biz/sdk/ICS-DCW1PC/download/package/NFCPortLib_sample.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+
+	<title>SDK for NFC Web Client Sample</title>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1087.0" data-gr-ext-installed="">
+	<h3>
+		<div class="header-title">
+			SDK for NFC Web Client Sample
+		</div>
+	</h3>
+
+    <div class="mainArea">
+		<div class="button1">
+			<span class="col-1" style="display: inline-block; width: 800px">Reading a FeliCa Card (ICS-E008/10 : Sample 5 Format)</span>
+			<button id="FeliCa">Execute</button>
+		</div>
+		<div class="button2">
+			<span class="col-2" style="display: inline-block; width: 800px">Reading a Mifare Classic Card (with Key A=ALL 0xff) </span>
+			<button id="MIFARE">Execute</button>
+		</div>
+		<br><br>
+		<div class="detect">
+			<div id="detect-title" class="detect-title" style="display: inline;"></div><br>
+			<div id="detect" class="detect-info" style="display: inline;"></div>
+		</div>
+		<br>
+		<div class="communicate">
+			<div id="communicate-title" class="communicate-title" style="display: inline;"></div><br>
+			<div id="communicate" class="communicate-response" style="display: inline;"></div>
+		</div>
+	</div>
+
+<script type="module">
+	import {NFCPortLib, NFCPortError, Configuration, DetectionOption, CommunicationOption, TargetCard} from './NFCPortLib.js';
+
+	let detectTitle = document.getElementById('detect-title');
+	let detectMessage = document.getElementById('detect');
+	let communicateTitle = document.getElementById('communicate-title');
+	let communicateMessage = document.getElementById('communicate');
+
+	document.getElementById('FeliCa').addEventListener('click', function () {
+		felica_card();
+		return;
+	});
+
+	document.getElementById('MIFARE').addEventListener('click', function () {
+		mifare_card();
+		return;
+	});
+
+	async function felica_card() {
+
+		let lib = null;
+
+		detectTitle.innerText = '';
+		detectMessage.innerText = '';
+		communicateTitle.innerText = '';
+		communicateMessage.innerText = '';
+
+		try {
+			/* create NFCPortLib object */
+			lib = new NFCPortLib();
+
+			/* init() */
+			let config = new Configuration(500 /* ackTimeout */, 500 /* receiveTimeout */, true /* autoBaudRate*/, true /* autoDeviceSelect */);
+			await lib.init(config);
+
+			/* open() */
+			await lib.open();
+			console.log('deviceName : ' + lib.deviceName);
+
+			/* detectCard(FeliCa Card) */
+			let detectOption = new DetectionOption(new Uint8Array([0xff, 0xff]), 0, true, false, null);
+			let card = await lib.detectCard('iso18092', detectOption)
+			.then(ret => {
+				detectTitle.innerText = 'Card is detected';
+				if (ret.systemCode == null) {
+					console.log('IDm : ' + _array_tohexs(ret.idm) +
+								'\nPMm : ' + _array_tohexs(ret.pmm) +
+								'\ntargetCardBaudRate : ' + lib.targetCardBaudRate + 'kbps');
+				} else {
+					console.log('IDm : ' + _array_tohexs(ret.idm) +
+								'\nPMm : ' + _array_tohexs(ret.pmm) +
+								'\nSystemCode : ' + _array_tohexs(ret.systemCode) +
+								'\ntargetCardBaudRate : ' + lib.targetCardBaudRate + 'kbps');
+				}
+				detectMessage.innerText = 'IDm : ' + _array_tohexs(ret.idm);
+				return ret;
+			}, (error) => {
+				detectTitle.innerText = 'Card is not detected';
+				throw(error);
+			});
+
+			/* communicateThru(Read Block) */
+			let felica_read_without_encryption = new Uint8Array([16, 0x06, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 1, 0x09,0x10, 1, 0x80,0x01]);
+			_array_copy(felica_read_without_encryption, 2, card.idm, 0, card.idm.length);
+			let response = await lib.communicateThru(felica_read_without_encryption, 100, detectOption)
+			.then(ret => {
+				communicateTitle.innerText = 'Reading...';
+				communicateMessage.innerText = 'Send    : ' + _array_tohexs(felica_read_without_encryption) +
+											   '\nReceive : ' + _array_tohexs(ret);
+				window.parent.postMessage(JSON.stringify({type: 'FELICA', data: _array_tohexs(ret)}), "*");
+				return ret;
+			}, (error) => {
+				communicateTitle.innerText = 'Read error';
+				throw(error);
+			});
+
+			/* close() */
+			await lib.close();
+			lib = null;
+
+			console.log('Success');
+
+		} catch(error) {
+			console.log('Error errorType : ' + error.errorType);
+			console.log('      message : ' + error.message);
+
+			if (lib != null) {
+				await lib.close();
+				lib = null;
+			}
+		}
+
+		console.log('[Reading a FeliCa Card] End', "*");
+		return;
+	}
+
+	async function mifare_card() {
+		console.log('[Reading a Mifare Classic Card] Begin');
+
+		let lib = null;
+
+		detectTitle.innerText = '';
+		detectMessage.innerText = '';
+		communicateTitle.innerText = '';
+		communicateMessage.innerText = '';
+
+		try {
+			/* create NFCPortLib object */
+			lib = new NFCPortLib();
+
+			/* init() */
+			let config = new Configuration(500 /* ackTimeout */, 500 /* receiveTimeout */, true /* autoBaudRate*/, true /* autoDeviceSelect */);
+			await lib.init(config);
+
+			/* open() */
+			await lib.open();
+			console.log('deviceName : ' + lib.deviceName);
+
+			/* detectCard(TypeA Card) */
+			let card = await lib.detectCard('iso14443-3A')
+			.then(ret => {
+				detectTitle.innerText = 'Card is detected';
+				console.log('UID : ' + _array_tohexs(ret.uid) +
+							'\ntargetCardBaudRate : ' + lib.targetCardBaudRate + 'kbps');
+				detectMessage.innerText = 'UID : ' + _array_tohexs(ret.uid);
+				return ret;
+			}, (error) => {
+				detectTitle.innerText = 'Card is not detected';
+				throw(error);
+			});
+
+			/* communicateThru(Authentication) */
+			let keyType = 'KeyA';
+			let key = new Uint8Array([0xff,0xff,0xff,0xff,0xff,0xff]);
+			let blockNumber = 8;
+			let communicationOption = new CommunicationOption(true, key, keyType, blockNumber, card.uid);
+			await lib.communicateThru(null, 0, communicationOption)
+			.then(ret => {
+				communicateTitle.innerText = 'Reading...\nAuthentication : Success';
+				return ret;
+			}, (error) => {
+				communicateTitle.innerText = 'Reading...\nAuthentication : Failed';
+				throw(error);
+			});
+
+			/* communicateThru(Read Binary) */
+			let read_binary = new Uint8Array([0x30, blockNumber]);
+			let response = await lib.communicateThru(read_binary, 100)
+			.then(ret => {
+				communicateMessage.innerText = 'Send    : ' + _array_tohexs(read_binary) +
+											   '\nReceive : ' + _array_tohexs(ret);
+				window.parent.postMessage(JSON.stringify({type: 'NFC', data: _array_tohexs(ret)}), "*");
+				return ret;
+			}, (error) => {
+				communicateTitle.innerText = 'Read error';
+				throw(error);
+			});
+
+			/* close() */
+			await lib.close();
+			lib = null;
+
+			console.log('Success');
+
+		} catch(error) {
+			console.log('Error errorType : ' + error.errorType);
+			console.log('      message : ' + error.message);
+
+			if (lib != null) {
+				await lib.close();
+				lib = null;
+			}
+		}
+		console.log('[Reading a Mifare Classic Card] End');
+		return;
+	}
+
+	function _def_val(param, def)
+	{
+		return (param === undefined) ? def : param;
+	}
+
+	function _array_slice(array, offset, length)
+	{
+		let result;
+
+		length = _def_val(length, array.length - offset);
+		result = [];
+		_array_copy(result, 0, array, offset, length);
+		
+		return result;
+	}
+
+	function _bytes2hexs(bytes, sep) {
+		let str;
+
+		sep = _def_val(sep, ' ');
+
+		return bytes.map(function(byte) {
+			str = byte.toString(16);
+			return byte < 0x10 ? '0'+str : str;
+		}).join(sep).toUpperCase();
+	}
+
+	function _array_tohexs(array, offset, length)
+	{
+		let temp;
+
+		offset = _def_val(offset, 0);
+		length = _def_val(length, array.length - offset);
+
+		temp = _array_slice(array, offset, length );
+		return _bytes2hexs(temp, '');
+	}
+
+	function _array_copy(dest, dest_offset, src, src_offset, length)
+	{
+		let idx;
+
+		src_offset = _def_val(src_offset, 0);
+		length = _def_val(length, src.length);
+
+		for (idx = 0; idx < length; idx++) {
+			dest[dest_offset + idx] = src[src_offset + idx];
+		}
+
+		return dest;
+	}
+</script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
