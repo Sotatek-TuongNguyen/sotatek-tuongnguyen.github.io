@@ -3,14 +3,14 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "4754a52f339f01034e3d57f7c176da26",
+  "version.json": "7a56ffc1a3c0f666c451b14db295f72d",
 "splash/img/light-background.png": "e1bd3cb2e057faa13726039f9be99d83",
 "splash/splash.js": "123c400b58bea74c1305ca3ac966748d",
-"splash/style.css": "b60429014986300d0f9df2143b069ba4",
+"splash/style.css": "fddc00e57405f56955f20d715a539673",
 "favicon.ico": "827d16cfc64a716563aba7f9d21439bb",
-"index.html": "8b95d365da1c7696d990f69c978f8155",
-"/": "8b95d365da1c7696d990f69c978f8155",
-"main.dart.js": "3f21762d156ae9531560b2a4ebdf43e3",
+"index.html": "97f3255baa4bd608ffba0487fddefb31",
+"/": "97f3255baa4bd608ffba0487fddefb31",
+"main.dart.js": "7848f3a512ef9babfbf312d450da60ce",
 "NFCPortLib.js": "7b1d6f1e5b130db5f6ce0d82da553bda",
 "flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
 "nfcweb.html": "00f82b1b44222ed11ff592d0c9137183",
@@ -134,7 +134,7 @@ const RESOURCES = {
 "assets/assets/icons/ic_grey_padcode_in.svg": "9b64865b8950a1fff730c13701ec295d",
 "assets/assets/icons/ic_red_user.svg": "eca37e1ea42c35b90842c551194192ad",
 "assets/assets/icons/ic_touch.svg": "0399f3e4ce4af1441a8c347fa6d0b1b4",
-"assets/assets/icons/splash.png": "e1bd3cb2e057faa13726039f9be99d83",
+"assets/assets/icons/splash.png": "11e2a207aa82e3e51f33d6a4879baf82",
 "assets/assets/icons/ic_disable_user.svg": "4f2d2ff285c1d84e649369a03bcda112",
 "assets/assets/icons/ic_white_warning.svg": "b72e7209d2ef0c7d28b524e074589b28",
 "assets/assets/icons/ic_nav_all_history_download.svg": "87474b1ec1dcef3b7c92565ba47ead91",
