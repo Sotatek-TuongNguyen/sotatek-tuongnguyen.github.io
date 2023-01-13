@@ -3,14 +3,14 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "7a56ffc1a3c0f666c451b14db295f72d",
+  "version.json": "1e3e5b43884ae7a860bc74fec208fb5a",
 "splash/img/light-background.png": "e1bd3cb2e057faa13726039f9be99d83",
 "splash/splash.js": "123c400b58bea74c1305ca3ac966748d",
 "splash/style.css": "fddc00e57405f56955f20d715a539673",
 "favicon.ico": "827d16cfc64a716563aba7f9d21439bb",
-"index.html": "97f3255baa4bd608ffba0487fddefb31",
-"/": "97f3255baa4bd608ffba0487fddefb31",
-"main.dart.js": "7848f3a512ef9babfbf312d450da60ce",
+"index.html": "72858caf99b52b6c2cbd0be5b2ba4dd4",
+"/": "72858caf99b52b6c2cbd0be5b2ba4dd4",
+"main.dart.js": "d99ed90d8bc9ccc6839d7ab6e2ea969b",
 "NFCPortLib.js": "7b1d6f1e5b130db5f6ce0d82da553bda",
 "flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
 "nfcweb.html": "00f82b1b44222ed11ff592d0c9137183",
