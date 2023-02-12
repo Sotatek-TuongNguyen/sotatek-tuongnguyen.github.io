@@ -3,16 +3,16 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "fdaf3d1f56dbf441b42d26bc81dcb28f",
+  "version.json": "d4b417ee181655fb6842b55df173d674",
 "splash/img/light-background.png": "e1bd3cb2e057faa13726039f9be99d83",
 "splash/splash.js": "123c400b58bea74c1305ca3ac966748d",
 "splash/style.css": "fddc00e57405f56955f20d715a539673",
 "favicon.ico": "13229b800be2d53fad38a732e478e15d",
-"index.html": "69b3cce2f3dfbadd80790dda089ed1d4",
-"/": "69b3cce2f3dfbadd80790dda089ed1d4",
-"main.dart.js": "bd84ef579167aaa28132b135d38a220d",
+"index.html": "5228894d038d74470cb21b64f7a5b2c3",
+"/": "5228894d038d74470cb21b64f7a5b2c3",
+"main.dart.js": "fed3487b068ce028a8c9eea5d221c571",
 "NFCPortLib.js": "7b1d6f1e5b130db5f6ce0d82da553bda",
-"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
+"flutter.js": "1cfe996e845b3a8a33f57607e8b09ee4",
 "nfcweb.html": "00f82b1b44222ed11ff592d0c9137183",
 "test.png": "db041677bbb85dec8ebd4944cd09a7f3",
 "icons/favicon-16x16.png": "8f83fdfb581c9d7898679a5aef2d863c",
@@ -27,17 +27,16 @@ const RESOURCES = {
 "icons/favicon-32x32.png": "3725dfa1c78579f02a8a35376d0f9dbd",
 "manifest.json": "b6b9a5411e2349a62ca346550b3eb243",
 "assets/AssetManifest.json": "8ab84aa11e2a927fbbb4cec2ee373109",
-"assets/NOTICES": "8e0233024a8451d3af4f34c38adb453f",
+"assets/NOTICES": "f8a6c9ea4c0f4098393f008a9fa6c17a",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/shaders/ink_sparkle.frag": "9c58403d1e2b127ce33fc0f57597d109",
 "assets/fonts/NotoSansJP-Regular.otf": "ecfed48e463db4e31d1691c8af367730",
 "assets/fonts/NotoSansJP-Medium.otf": "d6c74d39a44c519ff736ac55e5d28a46",
 "assets/fonts/NotoSansJP-Light.otf": "137761c9e4b05edc375b06c256e9b65a",
 "assets/fonts/NotoSansJP-Thin.otf": "e2b92248795c0cd02d9858aaf2a12ec2",
 "assets/fonts/HiraginoKakuGothicProW3.otf": "9235878c979f8fa583e3686441e351ae",
 "assets/fonts/NotoSansJP-Bold.otf": "e463c4b3a2d7fbfb917831767da8c24f",
-"assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
+"assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
 "assets/fonts/NotoSansJP-Black.otf": "5ce4631ec833cd0011936d5653fbd144",
 "assets/assets/images/img_empty.svg": "d1cfd30745685f465c959ce9a68656f5",
 "assets/assets/images/img_lock.png": "1a19d8ae0d81c7bb63a7008c430b3f1d",
@@ -197,10 +196,10 @@ const RESOURCES = {
 "assets/assets/icons/ic_chain.svg": "acb1db69ecae12bf0aa57ed8e4c69d31",
 "assets/assets/icons/ic_gray_search.svg": "211ac3ca5a64423153c3f879f028b0d1",
 "assets/assets/icons/ic_grey_auto_lock.svg": "ca840ee63ff154aeb785e6c5be52916d",
-"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
-"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
-"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
-"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62"
+"canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
+"canvaskit/profiling/canvaskit.js": "c21852696bc1cc82e8894d851c01921a",
+"canvaskit/profiling/canvaskit.wasm": "371bc4e204443b0d5e774d64a046eb99",
+"canvaskit/canvaskit.wasm": "3de12d898ec208a5f31362cc00f09b9e"
 };
 
 // The application shell files that are downloaded before a service worker can
