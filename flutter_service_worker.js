@@ -3,14 +3,14 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "134b614eabd8c3013b21eac261eec41c",
+  "version.json": "8f8f611da036ff973135c30ce34a365c",
 "splash/img/light-background.png": "e1bd3cb2e057faa13726039f9be99d83",
 "splash/splash.js": "123c400b58bea74c1305ca3ac966748d",
 "splash/style.css": "fddc00e57405f56955f20d715a539673",
 "favicon.ico": "13229b800be2d53fad38a732e478e15d",
-"index.html": "bcb8169539bac89112960c68f4263153",
-"/": "bcb8169539bac89112960c68f4263153",
-"main.dart.js": "e946c0e68a0bb4198143ad09d808f30e",
+"index.html": "64f797b1d3eef9a11e1c43435319366d",
+"/": "64f797b1d3eef9a11e1c43435319366d",
+"main.dart.js": "6c41c66b5945a60ab994dc7b4283e194",
 "NFCPortLib.js": "7b1d6f1e5b130db5f6ce0d82da553bda",
 "flutter.js": "1cfe996e845b3a8a33f57607e8b09ee4",
 "nfcweb.html": "00f82b1b44222ed11ff592d0c9137183",
@@ -26,7 +26,7 @@ const RESOURCES = {
 "icons/Icon-512.png": "b5eb248bd9971de9f0f0951c7d0824ea",
 "icons/favicon-32x32.png": "3725dfa1c78579f02a8a35376d0f9dbd",
 "manifest.json": "b6b9a5411e2349a62ca346550b3eb243",
-"assets/AssetManifest.json": "8ab84aa11e2a927fbbb4cec2ee373109",
+"assets/AssetManifest.json": "aa4db84edd6af79ed6755ee01e01a5d6",
 "assets/NOTICES": "adb95eff149bf680997ea24af1248d2c",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
