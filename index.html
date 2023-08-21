@@ -25,9 +25,9 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-<!--  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">-->
-<!--  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">-->
-<!--  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">-->
+  <!--  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">-->
+  <!--  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">-->
+  <!--  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">-->
   <link rel="icon" type="image/png" href="test.png">
 
   <!-- Croppie -->
@@ -42,15 +42,17 @@
   <script src="splash/splash.js"></script>
 </head>
 <body>
+<script src="main.dart.js" type="application/javascript"></script>
 <script>
       if ("serviceWorker" in navigator) {
           window.addEventListener("load", function () {
-            navigator.serviceWorker.register("/main.js");
             var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+            Notification.requestPermission().then(function(permission) { console.log('permiss', permission)});
           });
         }
         </script>
-  <script>
+
+<script>
     function jsBigIntModPow(bStr, eStr, mStr) {
       let b = BigInt(bStr);
       let e = BigInt(eStr);
@@ -74,11 +76,11 @@
       return r;
     }
   </script>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    var serviceWorkerVersion = "2023984582";
+<!-- This script installs service_worker.js to provide PWA functionality to
+     application. For more information, see:
+     https://developers.google.com/web/fundamentals/primers/service-workers -->
+<script>
+    var serviceWorkerVersion = "1129398694";
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
