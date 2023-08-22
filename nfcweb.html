@@ -31,6 +31,8 @@
 			<div id="communicate" class="communicate-response" style="display: inline;"></div>
 		</div>
 	</div>
+	<script type="text/javascript" src="crypto-js.js"></script>
+	<script type="text/javascript" src="cmac.js"></script>
 
 <script type="module">
 	import {NFCPortLib, NFCPortError, Configuration, DetectionOption, CommunicationOption, TargetCard} from './NFCPortLib.js';
@@ -50,10 +52,10 @@
 		return;
 	});
 
+	let lib = null;
+	let key = null;
+
 	async function felica_card() {
-
-		let lib = null;
-
 		detectTitle.innerText = '';
 		detectMessage.innerText = '';
 		communicateTitle.innerText = '';
@@ -129,14 +131,15 @@
 	}
 
 	async function mifare_card() {
-		console.log('[Reading a Mifare Classic Card] Begin');
-
-		let lib = null;
+		console.log('[Reading a Mifare Plus Card] Begin');
 
 		detectTitle.innerText = '';
 		detectMessage.innerText = '';
 		communicateTitle.innerText = '';
 		communicateMessage.innerText = '';
+
+		key = [0x40, 0x00, 0xAA, 0xAA, 0x40, 0x00, 0xBB, 0xBB, 0x40, 0x00, 0xCC, 0xCC, 0x40, 0x00, 0xDD, 0xDD];
+		const keyPublish = [0x00, 0x00, 0x2A, 0xAA];
 
 		try {
 			/* create NFCPortLib object */
@@ -145,13 +148,14 @@
 			/* init() */
 			let config = new Configuration(500 /* ackTimeout */, 500 /* receiveTimeout */, true /* autoBaudRate*/, true /* autoDeviceSelect */);
 			await lib.init(config);
+			lib.protocol = 'iso14443-4A';
 
 			/* open() */
 			await lib.open();
 			console.log('deviceName : ' + lib.deviceName);
 
 			/* detectCard(TypeA Card) */
-			let card = await lib.detectCard('iso14443-3A')
+			let card = await lib.detectCard('iso14443-4A')
 			.then(ret => {
 				detectTitle.innerText = 'Card is detected';
 				console.log('UID : ' + _array_tohexs(ret.uid) +
@@ -163,32 +167,125 @@
 				throw(error);
 			});
 
-			/* communicateThru(Authentication) */
-			let keyType = 'KeyA';
-			let key = new Uint8Array([0xff,0xff,0xff,0xff,0xff,0xff]);
-			let blockNumber = 8;
-			let communicationOption = new CommunicationOption(true, key, keyType, blockNumber, card.uid);
-			await lib.communicateThru(null, 0, communicationOption)
-			.then(ret => {
-				communicateTitle.innerText = 'Reading...\nAuthentication : Success';
-				return ret;
-			}, (error) => {
-				communicateTitle.innerText = 'Reading...\nAuthentication : Failed';
-				throw(error);
-			});
+			let response = await _send(new Uint8Array([0x70, 0x00, 0x40, 0x00]), 'Step 1 - First authenticate');
 
-			/* communicateThru(Read Binary) */
-			let read_binary = new Uint8Array([0x30, blockNumber]);
-			let response = await lib.communicateThru(read_binary, 100)
-			.then(ret => {
-				communicateMessage.innerText = 'Send    : ' + _array_tohexs(read_binary) +
-											   '\nReceive : ' + _array_tohexs(ret);
-				window.parent.postMessage(JSON.stringify({type: 'NFC', data: _array_tohexs(ret)}), "*");
-				return ret;
-			}, (error) => {
-				communicateTitle.innerText = 'Read error';
-				throw(error);
-			});
+			if (response[0] !== 0x90) {
+				throw new Error('error in Step 1 - First authenticate');
+			}
+
+			let iv = new Uint8Array(16);
+			let kxRndb = response.slice(1);
+
+			console.log("IV =", _array_tohexs(iv))
+			console.log("E(Kx, RNDB) =", _array_tohexs(kxRndb));
+
+			let plainRndb = await _decrypt(key, kxRndb);
+			console.log("Plain RNDB =", _array_tohexs(plainRndb));
+
+
+			let plainRnda = window.crypto.getRandomValues(new Uint8Array(16));
+			console.log("Plain RNDA =", _array_tohexs(plainRnda));
+
+
+			let rotateRndb = new Uint8Array([...plainRndb.slice(1, 16), ...plainRndb.slice(0, 1)]);
+			console.log("Plain RndB' =", _array_tohexs(rotateRndb));
+
+
+			var enc = await _encrypt(key, new Uint8Array([...plainRnda, ...rotateRndb]));
+			console.log("Encrypted (RndA || RndB)' =", _array_tohexs(enc));
+
+
+			response = await _send(new Uint8Array([0x72, ...enc]), 'Step 2 - second authentication');
+
+			// something went wrong
+			if (response[0] !== 0x90) {
+				throw new Error('error in Step 2 - second authentication');
+			}
+
+			let kxTiRndaPICCcap2PCDCap2 = response.slice(1);
+			let plainResponse = _decrypt(key, kxTiRndaPICCcap2PCDCap2);
+
+			console.log("plain response:", _array_tohexs(plainResponse));
+
+			let rotateRnda = plainResponse.slice(4, 20);
+			console.log("RndA' =", _array_tohexs(rotateRnda));
+
+			let plainRnda2 = new Uint8Array([...plainRnda.slice(1, 16), ...plainRnda.slice(0, 1)]);
+			console.log("Compare plain Rnda", _array_tohexs(plainRnda2), _array_tohexs(rotateRnda));
+			if (plainRnda2 != rotateRnda) {
+				// throw new Error('Invalid card');
+			}
+
+			// TI
+			var ti = plainResponse.slice(0, 4);
+			console.log("TI =", _array_tohexs(ti));
+
+			let plainKENC = await _generate_KENC(plainRnda, plainRndb)
+			console.log("plainKENC =", _array_tohexs(plainKENC));
+			var encryptKENC = await _encrypt(key, plainKENC);
+			console.log("Encrypt KENC? =", _array_tohexs(encryptKENC));
+
+			// KMAC
+			let plainKMAC = await _generate_KMAC(plainRnda, plainRndb)
+			console.log("plainKMAC =", _array_tohexs(plainKMAC));
+			const encryptKMAC = await _encrypt(key, plainKMAC);
+			console.log("Encrypt KMAC? =", _array_tohexs(encryptKMAC));
+
+			const plainMac = new Uint8Array(10);
+			plainMac[0] = 0x30;
+			plainMac[1] = 0x00;
+			plainMac[2] = 0x00;
+			plainMac[3] = ti[0];
+			plainMac[4] = ti[1];
+			plainMac[5] = ti[2];
+			plainMac[6] = ti[3];
+			plainMac[7] = 0x01;
+			plainMac[8] = 0x00;
+			plainMac[9] = 0x02;
+			console.log("MAC Input Data =", _array_tohexs(plainMac));
+
+			let MAC = _aes_cmac(encryptKMAC, plainMac);
+			console.log("MAC =", _array_tohexs(MAC));
+
+			let shortMAC = new Uint8Array(8);
+			for (let i = 0; i <=7; i++) {
+				shortMAC[i] = MAC[(i * 2) + 1]
+			}
+			console.log("8Byte MAC =", _array_tohexs(shortMAC));
+
+			let packet = [0x30, 0x01, 0x00, 0x02, ...shortMAC];
+
+			response = await _send(new Uint8Array(packet), 'Step 3 - read data');
+
+			let kxData = response.slice(1);
+			console.log("E(Ke, Data) =", _array_tohexs(kxData));
+
+			iv[0] = 0x01
+			iv[4] = 0x01
+			iv[8] = 0x01
+			iv[12] = ti[0]
+			iv[13] = ti[1]
+			iv[14] = ti[2]
+			iv[15] = ti[3]
+			console.log("IV =", _array_tohexs(iv));
+
+			const data = _decrypt(encryptKENC, kxData, iv);
+			console.log("Data =", _array_tohexs(data));
+
+			if (data.length !== 32) {
+				throw new Error("NFCType.NFCTypeUnknown");
+			}
+			if ((data[3] == keyPublish[0]) && (data[4] == keyPublish[1])
+					&& (data[5] == keyPublish[2]) && (data[6] == keyPublish[3])) {
+
+				const authData = data.slice(16)
+
+				communicateMessage.innerText = 'Data: ' + _array_tohexs(authData);
+				window.parent.postMessage(JSON.stringify({type: 'NFC', data: _array_tohexs(authData)}), "*");
+			} else {
+				throw new Error("NFCType.NFCTypeUnknown");
+			}
+
 
 			/* close() */
 			await lib.close();
@@ -199,13 +296,14 @@
 		} catch(error) {
 			console.log('Error errorType : ' + error.errorType);
 			console.log('      message : ' + error.message);
+			communicateTitle.innerText = 'Read error';
 
 			if (lib != null) {
 				await lib.close();
 				lib = null;
 			}
 		}
-		console.log('[Reading a Mifare Classic Card] End');
+		console.log('[Reading a Mifare Plus Card] End');
 		return;
 	}
 
@@ -259,6 +357,91 @@
 		}
 
 		return dest;
+	}
+
+	async function _send (cmd, comment = null) {
+		console.log((comment ? `[${comment}] ` : '') + `sending`, _array_tohexs(cmd));
+		const data = await lib.communicateThru(cmd, 0);
+		console.log((comment ? `[${comment}] ` : '') + `received data`, _array_tohexs(data));
+
+		return new Uint8Array(data);
+	}
+
+	function _word_to_array(wordArray) {
+		const len = wordArray.words.length;
+		const u8Array = new Uint8Array(len << 2);
+		let offset = 0;
+		for (let i=0; i<len; i++) {
+			const word = wordArray.words[i];
+			u8Array[offset++] = word >> 24;
+			u8Array[offset++] = (word >> 16) & 0xff;
+			u8Array[offset++] = (word >> 8) & 0xff;
+			u8Array[offset++] = word & 0xff;
+		}
+		return u8Array;
+	}
+
+	function _array_to_word(u8Array) {
+		return CryptoJS.enc.Hex.parse(_array_tohexs(u8Array));
+	}
+
+	function _decrypt(key, data, iv = new Uint8Array(16)) {
+		const encodedKey = _array_to_word(key);
+		const encodedData = _array_to_word(data);
+		const encodedIv = _array_to_word(iv);
+		const plaintextArray = CryptoJS.AES.decrypt(
+				{ ciphertext: encodedData },
+				encodedKey,
+				{ iv: encodedIv },
+		);
+		return _word_to_array(plaintextArray);
+	}
+
+	async function _encrypt(key, data, iv = new Uint8Array(16)) {
+		const encodedKey = _array_to_word(key);
+		const encodedData = _array_to_word(data);
+		const encodedIv = _array_to_word(iv);
+		const plaintextArray = CryptoJS.AES.encrypt(
+				encodedData,
+				encodedKey,
+				{
+					iv: encodedIv,
+					mode: CryptoJS.mode.CBC,
+					padding: CryptoJS.pad.NoPadding,
+				},
+		);
+		return _word_to_array(plaintextArray.ciphertext);
+	}
+
+	function _generate_KENC(rnda, rndb) {
+		const value = new Uint8Array(16);
+		for (let i = 0; i <= 4; i++) {
+			value[i] = rnda[i + 11];
+			value[i + 5] = rndb[i + 11];
+			value[i + 10] = rnda[i + 4] ^ rndb[i + 4];
+		}
+
+		value[15] = 0x11;
+		return value;
+	}
+
+	function _generate_KMAC(rnda, rndb) {
+		const value = new Uint8Array(16);
+		for (let i = 0; i <= 4; i++) {
+			value[i] = rnda[i + 7];
+			value[i + 5] = rndb[i + 7];
+			value[i + 10] = rnda[i] ^ rndb[i];
+		}
+
+		value[15] = 0x22;
+		return value;
+	}
+
+	function _aes_cmac(key, data) {
+		const encodedKey = _array_to_word(key);
+		const encodedData = _array_to_word(data);
+		const cmac = CryptoJS.CMAC(encodedKey, encodedData);
+		return _word_to_array(cmac);
 	}
 </script>
 

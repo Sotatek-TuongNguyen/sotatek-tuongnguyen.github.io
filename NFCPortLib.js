@@ -933,6 +933,13 @@ class ReaderWriterBase {
         );
       await this.typea_mifareAuth(a);
     }
+
+    if (
+      this.protocol == ReaderWriterBase.PROTOCOL_ISO14443_4A
+    ) {
+      return await this.pcsc.ccid.escape(t, 500);
+    }
+
     return (
       (s = await this.sendThruCommand(t, i, a)), e("communicateThru end"), s
     );
@@ -4017,6 +4024,7 @@ class NFCPort400 extends ReaderWriterBase {
   }
   async open() {
     let r;
+    const protocol = this.protocol;
     e("open begin"),
       await super.open(
         NFCPort400.SELECT_CONFIG,
@@ -4038,8 +4046,10 @@ class NFCPort400 extends ReaderWriterBase {
     }
     this.config.autoBaudRate || (await this.setFixedRFSpeed());
     try {
-      await this.pcsc.startTransparentSession(this.config.priorityLibrary),
-        await this.setFeliCaProtocol();
+      if (protocol !== ReaderWriterBase.PROTOCOL_ISO14443_4A) {
+        await this.pcsc.startTransparentSession(this.config.priorityLibrary),
+          await this.setFeliCaProtocol();
+      }
       const t = 4,
         i = (await this.pcsc.getProperty(NFCPort400.GET_PROPERTY_GROUP_NO))[t];
       let a;
@@ -4210,8 +4220,8 @@ class NFCPort400 extends ReaderWriterBase {
     else if (this.protocol == ReaderWriterBase.PROTOCOL_ISO14443_4A) {
       let e, t;
       (e = null != r.fsdi ? r.fsdi : ReaderWriterBase.TYPEA_DEFAULT_FSDI),
-        (t = null != r.cid ? r.cid : ReaderWriterBase.TYPEA_DEFAULT_CID),
-        await this.pcsc.switchProtocolISO14443_4A(e, t);
+        (t = null != r.cid ? r.cid : ReaderWriterBase.TYPEA_DEFAULT_CID)
+        // await this.pcsc.switchProtocolISO14443_4A(e, t);
     }
     this.targetCardBaudRate = await this.getTargetCardBaudRate();
     const t = await this.pcsc.getData(),
@@ -6688,6 +6698,7 @@ class NFCPortLib {
         this._config.devicePriority
       )),
         await r.init(this._config),
+        r.protocol = this.protocol;
         await r.open();
     } catch (e) {
       return Promise.reject(e);
