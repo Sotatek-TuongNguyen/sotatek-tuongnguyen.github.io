@@ -1,6 +1,6 @@
 {
-    "name": "repo_name",
-    "short_name": "repo_name",
+    "name": "GSL Pro",
+    "short_name": "GSL Pro",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
