@@ -2,20 +2,20 @@
 const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
-
-const RESOURCES = {"cmac.js": "b7e15181a04e3f4ce1a8ab8410feacb5",
-"version.json": "e84fdae0440662ba89e2066f2a857d00",
+const RESOURCES = {
+  "cmac.js": "b7e15181a04e3f4ce1a8ab8410feacb5",
+"nfcwebview.html": "9be24c56beb2710c214cf832b3a7c95d",
+"version.json": "0f94ce0e97c52943151b7f05a2ec838b",
 "splash/img/light-background.png": "3969465055dca0a10607bb5252b1e669",
 "splash/splash.js": "123c400b58bea74c1305ca3ac966748d",
 "splash/style.css": "1139298f5a1ff065398bd29f122dfaba",
 "favicon.ico": "13229b800be2d53fad38a732e478e15d",
-"index.html": "647056cb83cee7e578e06f12f36e3c23",
-"/": "647056cb83cee7e578e06f12f36e3c23",
+"index.html": "bd63dabfef43ff4d0777b8c6e8db434f",
+"/": "bd63dabfef43ff4d0777b8c6e8db434f",
 "crypto-js.js": "f716a02969e459fdfc8f37dee235e925",
-"main.dart.js": "5cf74e8ace4064cc331f80078f7dfcf8",
+"main.dart.js": "9f8d7475288d456c3e8e7bab12291105",
 "NFCPortLib.js": "24b6a03c1fc594cf51c0c70c28bbf815",
-"flutter.js": "6fef97aeca90b426343ba6c5c9dc5d4a",
-"nfcweb.html": "82cfcd87ec65982235f2a59c4d401786",
+"flutter.js": "a85fcf6324d3c4d3ae3be1ae4931e9c5",
 "test.png": "db041677bbb85dec8ebd4944cd09a7f3",
 "icons/favicon-16x16.png": "8f83fdfb581c9d7898679a5aef2d863c",
 "icons/favicon.ico": "12b2c4347acf05f867ae0ec0cd4d5e44",
@@ -27,21 +27,20 @@ const RESOURCES = {"cmac.js": "b7e15181a04e3f4ce1a8ab8410feacb5",
 "icons/Icon-maskable-512.png": "b5eb248bd9971de9f0f0951c7d0824ea",
 "icons/Icon-512.png": "b5eb248bd9971de9f0f0951c7d0824ea",
 "icons/favicon-32x32.png": "3725dfa1c78579f02a8a35376d0f9dbd",
-"manifest.json": "b6b9a5411e2349a62ca346550b3eb243",
-"assets/AssetManifest.json": "d7cf78d5840154ba2fe7740257ba04a4",
-"assets/NOTICES": "6858570dee069914905ff3f7a2f17583",
+"manifest.json": "544b9d2be1c96cc38096ce7914bcd2c9",
+"assets/AssetManifest.json": "b93809ce4c7690afdfa048b206624170",
+"assets/NOTICES": "cc091842307870d57c9bbc19aedfc86d",
 "assets/FontManifest.json": "f36d3dc04b8eb03009288af59065ae8d",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "a146284e8a5a174a69a28f2e8b4cc91e",
-"assets/shaders/ink_sparkle.frag": "f8b80e740d33eb157090be4e995febdf",
-"assets/AssetManifest.bin": "8a92ac7c1ec0936d0510ec2a6ecc6622",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/NotoSansJP-Regular.otf": "ecfed48e463db4e31d1691c8af367730",
 "assets/fonts/NotoSansJP-Medium.otf": "d6c74d39a44c519ff736ac55e5d28a46",
 "assets/fonts/NotoSansJP-Light.otf": "137761c9e4b05edc375b06c256e9b65a",
 "assets/fonts/NotoSansJP-Thin.otf": "e2b92248795c0cd02d9858aaf2a12ec2",
 "assets/fonts/HiraginoKakuGothicProW3.otf": "9235878c979f8fa583e3686441e351ae",
 "assets/fonts/NotoSansJP-Bold.otf": "e463c4b3a2d7fbfb917831767da8c24f",
-"assets/fonts/MaterialIcons-Regular.otf": "29bf78ffb2c81de233d55b25b30b2c21",
+"assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
 "assets/fonts/NotoSansJP-Black.otf": "5ce4631ec833cd0011936d5653fbd144",
+"assets/assets/nfcwebview.html": "9be24c56beb2710c214cf832b3a7c95d",
 "assets/assets/images/img_empty.svg": "d1cfd30745685f465c959ce9a68656f5",
 "assets/assets/images/img_lock.png": "1a19d8ae0d81c7bb63a7008c430b3f1d",
 "assets/assets/images/img_loading.png": "c996fb3205155c8f0c9043cd523e1c92",
@@ -184,6 +183,7 @@ const RESOURCES = {"cmac.js": "b7e15181a04e3f4ce1a8ab8410feacb5",
 "assets/assets/icons/ic_ticked.svg": "5e775a5606a4b56402d5b51bc29069d4",
 "assets/assets/icons/ic_nav_option.svg": "0acabc4decf42c8c1dcff2f3aa326fdc",
 "assets/assets/icons/ic_white_lock.svg": "020b4f5e63a0cdedc9081c8d0dd9bf0e",
+"assets/assets/icons/ic_logo_charactor.svg": "c1884ab1fa499beffe608288e045922f",
 "assets/assets/icons/ic_nfc_in.svg": "47dbe7aa02f31e1f1868ff828cd22c08",
 "assets/assets/icons/ic_lock_disable.svg": "85a0772662120a7ad56a7b2b4a68d950",
 "assets/assets/icons/ic_no_wifi.svg": "44a279e7219cc5da17947143865ba746",
@@ -203,20 +203,27 @@ const RESOURCES = {"cmac.js": "b7e15181a04e3f4ce1a8ab8410feacb5",
 "assets/assets/icons/ic_chain.svg": "acb1db69ecae12bf0aa57ed8e4c69d31",
 "assets/assets/icons/ic_gray_search.svg": "211ac3ca5a64423153c3f879f028b0d1",
 "assets/assets/icons/ic_grey_auto_lock.svg": "ca840ee63ff154aeb785e6c5be52916d",
-"canvaskit/skwasm.js": "1df4d741f441fa1a4d10530ced463ef8",
-"canvaskit/skwasm.wasm": "6711032e17bf49924b2b001cef0d3ea3",
-"canvaskit/chromium/canvaskit.js": "8c8392ce4a4364cbb240aa09b5652e05",
-"canvaskit/chromium/canvaskit.wasm": "fc18c3010856029414b70cae1afc5cd9",
-"canvaskit/canvaskit.js": "76f7d822f42397160c5dfc69cbc9b2de",
-"canvaskit/canvaskit.wasm": "f48eaf57cada79163ec6dec7929486ea",
-"canvaskit/skwasm.worker.js": "19659053a277272607529ef87acf9d8a"};
+"canvaskit/skwasm.js": "445e9e400085faead4493be2224d95aa",
+"canvaskit/skwasm.js.symbols": "741d50ffba71f89345996b0aa8426af8",
+"canvaskit/canvaskit.js.symbols": "38cba9233b92472a36ff011dc21c2c9f",
+"canvaskit/skwasm.wasm": "e42815763c5d05bba43f9d0337fa7d84",
+"canvaskit/chromium/canvaskit.js.symbols": "4525682ef039faeb11f24f37436dca06",
+"canvaskit/chromium/canvaskit.js": "43787ac5098c648979c27c13c6f804c3",
+"canvaskit/chromium/canvaskit.wasm": "f5934e694f12929ed56a671617acd254",
+"canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
+"canvaskit/profiling/canvaskit.js": "c21852696bc1cc82e8894d851c01921a",
+"canvaskit/profiling/canvaskit.wasm": "371bc4e204443b0d5e774d64a046eb99",
+"canvaskit/canvaskit.wasm": "3de12d898ec208a5f31362cc00f09b9e",
+"canvaskit/skwasm.worker.js": "bfb704a6c714a75da9ef320991e88b03"
+};
+
 // The application shell files that are downloaded before a service worker can
 // start.
-const CORE = ["main.dart.js",
+const CORE = [
+  "main.dart.js",
 "index.html",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
-
 // During install, the TEMP cache is populated with the application shell files.
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -227,6 +234,7 @@ self.addEventListener("install", (event) => {
     })
   );
 });
+
 // During activate, the cache is populated with the temp files downloaded in
 // install. If this service worker is upgrading from one with a saved
 // MANIFEST, then use this to retain unchanged resource files.
@@ -248,8 +256,6 @@ self.addEventListener("activate", function(event) {
         await caches.delete(TEMP);
         // Save the manifest to make future upgrades efficient.
         await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
-        // Claim client to enable caching on first launch
-        self.clients.claim();
         return;
       }
       var oldManifest = await manifest.json();
@@ -275,8 +281,6 @@ self.addEventListener("activate", function(event) {
       await caches.delete(TEMP);
       // Save the manifest to make future upgrades efficient.
       await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
-      // Claim client to enable caching on first launch
-      self.clients.claim();
       return;
     } catch (err) {
       // On an unhandled exception the state of the cache cannot be guaranteed.
@@ -287,6 +291,7 @@ self.addEventListener("activate", function(event) {
     }
   }());
 });
+
 // The fetch handler redirects requests for RESOURCE files to the service
 // worker cache.
 self.addEventListener("fetch", (event) => {
@@ -326,6 +331,7 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
 self.addEventListener('message', (event) => {
   // SkipWaiting can be used to immediately activate a waiting service worker.
   // This will also require a page refresh triggered by the main worker.
@@ -338,6 +344,7 @@ self.addEventListener('message', (event) => {
     return;
   }
 });
+
 // Download offline will check the RESOURCES for all files not in the cache
 // and populate them.
 async function downloadOffline() {
@@ -358,6 +365,7 @@ async function downloadOffline() {
   }
   return contentCache.addAll(resources);
 }
+
 // Attempt to download the resource online before falling back to
 // the offline cache.
 function onlineFirst(event) {
